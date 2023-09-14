@@ -1,11 +1,16 @@
-import Home from './component/Home';
+import Header from './component/Header';
+import { Outlet } from 'react-router-dom';
 import './App.css';
 
 function App() {
+  
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <div>
+        <Header />
+        <main className="pt-16 bg-slate-100 min-h-[calc(100vh)">
+        <Outlet />
+        </main>
+      </div>
   );
 }
 
