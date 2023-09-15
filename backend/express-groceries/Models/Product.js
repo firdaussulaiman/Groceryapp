@@ -25,6 +25,11 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
+
+    spec: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
