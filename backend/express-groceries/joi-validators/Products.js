@@ -9,4 +9,4 @@ const validators = {
   }),
 };
 
-module.exports = validator;
+module.exports = validators;
