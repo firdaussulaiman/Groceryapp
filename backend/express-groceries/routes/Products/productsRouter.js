@@ -13,4 +13,6 @@ router.get("/products/:id", (req, res) => {
   res.json({ product: "show product" });
 });
 
+router.put("/products/:id", (req, res, next) => {});
+
 module.exports = router;
