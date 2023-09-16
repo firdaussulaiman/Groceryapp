@@ -15,12 +15,6 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-
-    owner: {
-      type: ObjectId,
-      required: true,
-      ref: "User",
-    },
     price: {
       type: Number,
       required: true,
