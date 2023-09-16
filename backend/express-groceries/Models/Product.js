@@ -6,24 +6,27 @@ const productSchema = new Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
       required: true,
+      trim: true,
     },
     category: {
       type: String,
       required: true,
-    },
-
-    owner: {
-      type: ObjectId,
-      required: true,
-      ref: "User",
+      trim: true,
     },
     price: {
       type: Number,
       required: true,
+    },
+
+    spec: {
+      type: String,
+      required: true,
+      trim: true,
     },
   },
   {
