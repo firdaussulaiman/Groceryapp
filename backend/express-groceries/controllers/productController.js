@@ -1,7 +1,8 @@
 const productModel = require("../Models/Product");
+const { productsValidator } = require("../joi-validators/Products");
 // const asyncHandler = require("express-async-handler");
 
-// const productvalidator =require("")
+const productvalidator = require("../joi-validators/Products");
 
 const fetchAllProducts = async (req, res) => {
   //empty the data first
@@ -66,7 +67,8 @@ const updateAProduct = async (req, res) => {
 // below is the create product(post) only applicable to admin;
 
 const createProduct = async (req, res) => {
-  const
+  // To check the validation is not interrupted at early stage
+  const productsValidationResults = productsValidator;
 };
 
 module.exports = {
