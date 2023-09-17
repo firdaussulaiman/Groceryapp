@@ -16,20 +16,6 @@ const cartSchema = new Schema(
         unique: true,
       },
     ],
-    //   name: {
-    //     type: String,
-    //     unique: true,
-    //   },
-    //   quantity:{
-    //           type: Number,
-    //           required: true,
-    //           min: 1,
-    //           default: 1
-    //       },
-    //   price: {
-    //     type: Number,
-    //     required: true,
-    // }]
     checkOut: {
       type: Boolean,
       default: false,
