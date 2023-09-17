@@ -3,7 +3,7 @@ const Products = require("../Models/Product");
 const seedProducts = require("./grocery.json");
 require("dotenv").config();
 
-const dbName = "Products";
+const dbName = "Grocery";
 
 mongoose.connect(process.env.DATABASE_URL, { dbName: dbName });
 
