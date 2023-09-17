@@ -5,7 +5,11 @@ require("dotenv").config();
 
 const dbName = "Grocery";
 
-mongoose.connect(process.env.DATABASE_URL, { dbName: dbName });
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  dbName,
+});
 
 // shortcut to mongoose.connection object
 const db = mongoose.connection;
@@ -22,7 +26,9 @@ const seedDB = async () => {
   console.log("Data seeded!");
 };
 
-seedDB().then(() => {
-  mongoose.connection.close();
+const closedConnection = async () => {
+  await mongoose.connection.close();
   console.log("Connection closed!");
-});
+};
+
+seedDB().then(() => closedConnection);

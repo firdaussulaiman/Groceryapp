@@ -9,11 +9,12 @@ const fetchAllProducts = async (req, res) => {
   let allProducts = [];
   try {
     allProducts = await productModel.find();
+    res.json({ allProducts });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "unable to get the data from database!" });
+    res.status(500).json({ message: "unable to get the data from database!" });
   }
-  return res.json(allProducts);
+  // return res.json({ allProducts });
   // res.json({ message: "Hello,it works!" });
 };
 
@@ -32,7 +33,7 @@ const showAproduct = async (req, res) => {
     res.json({ product });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ error: "unable to get the product!" });
+    res.status(404).json({ message: "unable to get the product!" });
   }
 };
 
@@ -61,7 +62,7 @@ const updatedProduct = async (req, res) => {
     return res.status(500).json({ error: "Failed to update product!" });
   }
 
-  return res.status(201).json(updateAProduct);
+  return res.status(201).json(updatedProduct);
 };
 
 // below is the create product(post) only applicable to admin;
@@ -80,6 +81,7 @@ const createProduct = async (req, res) => {
     validationError.forEach((error) => {
       errorObj[error.context.key] = error.message;
     });
+    console.log(errorObj);
     return res.status(400).json(errorObj);
   }
 
@@ -91,36 +93,46 @@ const createProduct = async (req, res) => {
     });
 
     if (validatedProduct) {
-      return res.status(409).json({ error: "Product exists!" });
+      return res.status(409).json({ message: "Product exists!" });
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "fail to get the product" });
+    return res.status(500).json({ message: "fail to get the product" });
   }
 
-  const product = req.body;
+  // const { name, price, description, image, spec, category } = req.body;
 
   try {
+    const product = req.body;
     await productModel.create(product);
-    return res.status(201).json({ message: "Product sucessfully created!" });
+    const result = await collection.insertOne(productData);
+    console.log("Inserted product with _id:", result.insertedId);
+    return res
+      .status(201)
+      .json({ message: "Product sucessfully created!", product });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "failed to created product!" });
   }
 
-  // return res.json(product);
+  return res.json();
 };
 
 const deleteProduct = async (req, res) => {
   try {
     const productId = req.params.id;
 
-    await productModel.findByIdAndDelete(beverageId);
+    const deletedProduct = await productModel.findByIdAndDelete(productId);
+    if (!deletedProduct) {
+      res.status(500).json({ message: "Product not exists!" });
+      return;
+    }
+    // const updatedProducts = await productModel.find();
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "failed to delete product!" });
   }
-  return res.status(201).json();
+  return res.status(204).json({ message: "Product sucessful deleted!" });
 };
 
 module.exports = {
