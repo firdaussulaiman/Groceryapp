@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Products = require("../Models/Product");
+const seedProducts = require("./grocery.json");
 require("dotenv").config();
 
 const dbName = "Products";
@@ -14,3 +15,14 @@ db.on("connected", function () {
 });
 
 //seeds the data
+
+const seedDB = async () => {
+  await Products.deleteMany();
+  await Products.insertMany(seedProducts);
+  console.log("Data seeded!");
+};
+
+seedDB().then(() => {
+  mongoose.connection.close();
+  console.log("Connection closed!");
+});
