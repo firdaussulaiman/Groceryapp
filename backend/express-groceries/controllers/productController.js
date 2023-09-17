@@ -81,7 +81,7 @@ const createProduct = async (req, res) => {
     validationError.forEach((error) => {
       errorObj[error.context.key] = error.message;
     });
-    console.log(errorObj);
+    // console.log(errorObj);
     return res.status(400).json(errorObj);
   }
 
@@ -104,15 +104,16 @@ const createProduct = async (req, res) => {
 
   try {
     const product = req.body;
+
     await productModel.create(product);
-    const result = await collection.insertOne(productData);
+    const result = await collection.insertOne(product);
     console.log("Inserted product with _id:", result.insertedId);
     return res
       .status(201)
       .json({ message: "Product sucessfully created!", product });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "failed to created product!" });
+    return res.status(500).json({ message: "failed to create product!" });
   }
 
   return res.json();
