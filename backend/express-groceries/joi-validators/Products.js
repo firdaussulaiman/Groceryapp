@@ -8,6 +8,7 @@ const validators = {
     price: Joi.number().min(0).label("Price").required(),
     category: Joi.string().min(3).label("Category").required(),
     spec: Joi.string().min(2).label("Spec").required(),
+    image: Joi.string().uri().label("Img URL").required(),
   }),
 };
 
