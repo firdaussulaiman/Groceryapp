@@ -2,8 +2,6 @@ const productModel = require("../Models/Product");
 const productsValidator = require("../joi-validators/Products");
 // const asyncHandler = require("express-async-handler");
 
-const productvalidator = require("../joi-validators/Products");
-
 const fetchAllProducts = async (req, res) => {
   //empty the data first
   let allProducts = [];
@@ -70,11 +68,12 @@ const updatedProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   // To check the validation is not interrupted at early stage
   const productsValidationResults =
-    productsValidator.productsValidator.validate(req, {
+    productsValidator.productsValidator.validate(req.body, {
       abortEarly: false,
     });
 
   let errorObj = {}; // to store the result of the validation
+  // return joi validation error messages if any.
   if (productsValidationResults.error) {
     const validationError = productsValidationResults.error.details;
 
@@ -106,8 +105,6 @@ const createProduct = async (req, res) => {
     const product = req.body;
 
     await productModel.create(product);
-    const result = await collection.insertOne(product);
-    console.log("Inserted product with _id:", result.insertedId);
     return res
       .status(201)
       .json({ message: "Product sucessfully created!", product });
@@ -116,7 +113,7 @@ const createProduct = async (req, res) => {
     return res.status(500).json({ message: "failed to create product!" });
   }
 
-  return res.json();
+  // return res.json();
 };
 
 const deleteProduct = async (req, res) => {
