@@ -1,19 +1,18 @@
 const productModel = require("../Models/Product");
-const { productsValidator } = require("../joi-validators/Products");
+const productsValidator = require("../joi-validators/Products");
 // const asyncHandler = require("express-async-handler");
-
-const productvalidator = require("../joi-validators/Products");
 
 const fetchAllProducts = async (req, res) => {
   //empty the data first
   let allProducts = [];
   try {
     allProducts = await productModel.find();
+    res.json({ allProducts });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "unable to get the data from database!" });
+    res.status(500).json({ message: "unable to get the data from database!" });
   }
-  return res.json(allProducts);
+  // return res.json({ allProducts });
   // res.json({ message: "Hello,it works!" });
 };
 
@@ -32,12 +31,12 @@ const showAproduct = async (req, res) => {
     res.json({ product });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ error: "unable to get the product!" });
+    res.status(404).json({ message: "unable to get the product!" });
   }
 };
 
 //The 2 methods will be granted to adminstrator;
-const updateAProduct = async (req, res) => {
+const updatedProduct = async (req, res) => {
   let productId = req.params.id;
   let product = null;
 
@@ -61,19 +60,83 @@ const updateAProduct = async (req, res) => {
     return res.status(500).json({ error: "Failed to update product!" });
   }
 
-  return res.status(201).json(product);
+  return res.status(201).json(updatedProduct);
 };
 
 // below is the create product(post) only applicable to admin;
 
 const createProduct = async (req, res) => {
   // To check the validation is not interrupted at early stage
-  const productsValidationResults = productsValidator;
+  const productsValidationResults =
+    productsValidator.productsValidator.validate(req.body, {
+      abortEarly: false,
+    });
+
+  let errorObj = {}; // to store the result of the validation
+  // return joi validation error messages if any.
+  if (productsValidationResults.error) {
+    const validationError = productsValidationResults.error.details;
+
+    validationError.forEach((error) => {
+      errorObj[error.context.key] = error.message;
+    });
+    // console.log(errorObj);
+    return res.status(400).json(errorObj);
+  }
+
+  let validatedProduct = productsValidationResults;
+
+  try {
+    validatedProduct = await productModel.findOne({
+      name: validatedProduct.name,
+    });
+
+    if (validatedProduct) {
+      return res.status(409).json({ message: "Product exists!" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "fail to get the product" });
+  }
+
+  // const { name, price, description, image, spec, category } = req.body;
+
+  try {
+    const product = req.body;
+
+    await productModel.create(product);
+    return res
+      .status(201)
+      .json({ message: "Product sucessfully created!", product });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "failed to create product!" });
+  }
+
+  // return res.json();
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    const deletedProduct = await productModel.findByIdAndDelete(productId);
+    if (!deletedProduct) {
+      res.status(500).json({ message: "Product not exists!" });
+      return;
+    }
+    // const updatedProducts = await productModel.find();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "failed to delete product!" });
+  }
+  return res.status(204).json({ message: "Product sucessful deleted!" });
 };
 
 module.exports = {
   fetchAllProducts,
   showAproduct,
-  updateAProduct,
+  updatedProduct,
   createProduct,
+  deleteProduct,
 };

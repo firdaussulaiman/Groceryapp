@@ -4,9 +4,17 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+require("dotenv").config();
+// For mongodb atlas server setup
+// require("./config/database");
+
+//Combind the mongodb atlas server and data seeding
+require("./Seeds/seeds");
+
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const productsRouter = require("./routes/productsRouter");
+// const { config } = require("dotenv");
 
 var app = express();
 
