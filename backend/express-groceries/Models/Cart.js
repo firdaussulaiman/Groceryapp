@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const cartSchema = new Schema(
   {
@@ -15,20 +16,6 @@ const cartSchema = new Schema(
         unique: true,
       },
     ],
-    //   name: {
-    //     type: String,
-    //     unique: true,
-    //   },
-    //   quantity:{
-    //           type: Number,
-    //           required: true,
-    //           min: 1,
-    //           default: 1
-    //       },
-    //   price: {
-    //     type: Number,
-    //     required: true,
-    // }]
     checkOut: {
       type: Boolean,
       default: false,
