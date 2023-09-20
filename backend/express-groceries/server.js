@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+// const cors = require("cors");
 
 require("dotenv").config();
 // For mongodb atlas server setup
