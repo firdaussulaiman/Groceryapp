@@ -8,12 +8,16 @@ import { StrictMode } from 'react';
 
 //routes
 import Home from './page/Home';
+import Login from './page/Login';
+import ShoppingCart from './page/ShoppingCart';
 
 
 const router =createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
+<Route path="/login" element={<Login />} />
+<Route path="/shoppingcart" element={<ShoppingCart />} />
 
 
     </Route>
