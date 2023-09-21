@@ -6,10 +6,13 @@ import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider} from 
 import reportWebVitals from './reportWebVitals';
 import { StrictMode } from 'react';
 
+
 //routes
 import Home from './page/Home';
 import Login from './page/Login';
 import ShoppingCart from './page/ShoppingCart';
+
+
 
 
 const router =createBrowserRouter(

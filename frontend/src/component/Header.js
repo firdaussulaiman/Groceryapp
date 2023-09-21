@@ -6,7 +6,7 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { HiShoppingCart } from "react-icons/hi";
 
 //routes
-import ShoppingCart from "../page/ShoppingCart";
+
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -26,9 +26,9 @@ const Header = () => {
         </Link>
         <div className="absolute right-20  text-3xl text-slate-700 ">
             <HiShoppingCart />
-            <div className="absolute -top-2 -right-1 text-white bg-red-500 h-5 w-4 rounded-full m-0 p-0 text-sm text-center cursor-pointer">
+            <Link to={"/shoppingcart"} className="absolute -top-2 -right-1 text-white bg-red-500 h-5 w-4 rounded-full m-0 p-0 text-sm text-center cursor-pointer">
               0
-            </div>
+            </Link>
           </div>
           <div className=" text-slate-600"onClick={handleshowMenu }>
             <div className="text-3xl cursor-pointer" >
