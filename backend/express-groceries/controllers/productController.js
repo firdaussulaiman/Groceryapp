@@ -7,7 +7,7 @@ const fetchAllProducts = async (req, res) => {
   let allProducts = [];
   try {
     allProducts = await productModel.find();
-    res.json({ allProducts });
+    res.json(allProducts);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "unable to get the data from database!" });
