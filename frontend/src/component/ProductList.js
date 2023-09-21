@@ -32,7 +32,7 @@ const ProductList = ({ selectedCategory }) => {
         filteredProducts.map((product) => (
           // Use the ProductCard component to display each product
           <ProductCard
-            key={product.id}
+            key={product._id}
             name={product.name}
             description={product.description}
             price={product.price}
