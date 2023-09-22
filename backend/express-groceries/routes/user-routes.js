@@ -12,3 +12,5 @@ router.get("/profile/:id", userController.showUser);
 router.delete("./profile/:id", userController.deleteUser);
 
 router.put("./profile/:id", userController.profileEditing);
+
+module.exports = router;
