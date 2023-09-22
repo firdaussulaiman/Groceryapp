@@ -125,12 +125,11 @@ const deleteProduct = async (req, res) => {
       res.status(500).json({ message: "Product not exists!" });
       return;
     }
-    // const updatedProducts = await productModel.find();
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "failed to delete product!" });
   }
-  return res.status(204).json({ message: "Product sucessful deleted!" });
+  return res.status(200).json({ message: "Product sucessfully deleted!" });
 };
 
 module.exports = {
