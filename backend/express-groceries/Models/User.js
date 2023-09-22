@@ -17,7 +17,6 @@ const userSchema = new Schema(
       type: String,
       minLength: 7,
       required: true,
-      trim: true,
     },
     isAdmin: {
       type: Boolean,
@@ -31,6 +30,10 @@ const userSchema = new Schema(
   }
   // { timestamps: true }
 );
+
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 12);
+});
 
 const User = mongoose.model("User", userSchema);
 
