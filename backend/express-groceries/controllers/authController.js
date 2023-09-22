@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../Models/User");
 const usersValidator = require("../joi-validators/usersValidator");
-const express = require("express");
+const { createSecreteToken } = require("../util/SecretToken");
 
 //using function declaration
 const logIn = async (req, res) => {
@@ -26,7 +26,7 @@ const logIn = async (req, res) => {
   }
 
   const validatedUser = req.body;
-  let errorMsg = "The password or email is incorrect";
+  let errorMsg = "Incorrect password or email";
   let user = null;
 
   try {
@@ -37,9 +37,26 @@ const logIn = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Fail to get user!" });
   }
+
+  const auth = await bcrypt.compare(password, user.password);
+  if (!auth) {
+    return res.json({ message: errorMsg });
+  }
+
+  const token = createSecreteToken(user._id);
+
+  res.status(201).json({
+    message: "Log in successfully",
+    success: true,
+    token,
+  });
 };
+
+// const passwordChange = async (req, res) => {
+//   //validate the changePasswordvalidator
+// };
 
 module.exports = {
   logIn,
-  passwordChange,
+  // passwordChange,
 };
