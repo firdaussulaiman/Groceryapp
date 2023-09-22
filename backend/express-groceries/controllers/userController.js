@@ -98,7 +98,7 @@ const profileEditing = async (req, res) => {
 };
 
 const showUser = async (req, res) => {
-  let userId = req.params.id;
+  let userId = req.params.userId;
   try {
     const user = await userModel.findById(userId);
 
@@ -115,22 +115,21 @@ const showUser = async (req, res) => {
   };
 };
 
-
-const deleteUser = async(req,res)=>{
-  try{
-    const userId = req.params.id;
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
 
     const deletedUser = await userModel.findByIdAndDelete(userId);
 
-    IF(!deletedUser){
-      res.status(500).json({message:"User not exists"});
+    if (!deletedUser) {
+      res.status(500).json({ message: "User not exists" });
       return;
     }
-  }catch(error){
-    res.status(500).json({message:"failed to delete user!"});
+  } catch (error) {
+    res.status(500).json({ message: "failed to delete user!" });
   }
-  return res.status(200).json({message:"User deleted successfully!"})
-}
+  return res.status(200).json({ message: "User deleted successfully!" });
+};
 
 module.exports = {
   registration,
