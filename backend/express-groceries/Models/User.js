@@ -24,16 +24,12 @@ const userSchema = new Schema(
       required: true,
       default: false,
     },
-    tokens: [
-      {
-        token: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
-  },
-  { timestamps: true }
+    createdAt: {
+      Type: Date,
+      default: new Date(),
+    },
+  }
+  // { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
