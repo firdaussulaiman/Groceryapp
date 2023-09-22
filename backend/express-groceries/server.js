@@ -13,8 +13,8 @@ require("dotenv").config();
 require("./Seeds/seeds");
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 const productsRouter = require("./routes/productsRouter");
+const usersRouter = require("./routes/user-router");
 // const { config } = require("dotenv");
 
 var app = express();
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api/user", usersRouter);
 //products router
 app.use("/products", productsRouter);
 
