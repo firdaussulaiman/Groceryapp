@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const userModel = require("../Models/User");
 const userValidator = require("../joi-validators/usersValidator");
 
@@ -11,6 +12,8 @@ const registration = async (req, res) => {
     }
   );
 
+  // console.log(req.body);
+
   let errorObj = {};
 
   if (userValidationResults.error) {
@@ -19,17 +22,18 @@ const registration = async (req, res) => {
     validationError.forEach((error) => {
       errorObj[error.context.key] = error.message;
     });
-    // console.log("Hello");
+    console.log(errorObj);
     return res.status(400).json(errorObj);
   }
 
   let validatedUser = userValidationResults;
 
   try {
-    validatedUser = await userModel.find({
+    validatedUser = await userModel.findOne({
       email: validatedUser.value.email,
     });
     if (validatedUser) {
+      // console.log(validatedUser);
       return res.status(409).json({ message: "User exists!" });
     }
   } catch (error) {
@@ -44,14 +48,9 @@ const registration = async (req, res) => {
     await userModel.create(user);
     return res.status(201).json({ message: "user created!" });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "failed to create user!" });
   }
-  const userData = {
-    name: user.name,
-    Email: user.Email,
-    userId: user._id,
-  };
-  return res.json(userData);
 };
 //editProfile
 const profileEditing = async (req, res) => {
