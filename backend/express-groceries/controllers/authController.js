@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../Models/User");
 const userValidator = require("../joi-validators/usersValidator");
 const { createSecreteToken } = require("../util/SecretToken");
-const { error } = require("console");
 
 //using function declaration
 const logIn = async (req, res) => {
