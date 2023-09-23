@@ -30,7 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
-app.use("/", indexRouter);
 app.use("/api/user", usersRouter);
 //products router
 app.use("/products", productsRouter);

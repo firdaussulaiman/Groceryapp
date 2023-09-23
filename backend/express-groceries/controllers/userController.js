@@ -4,9 +4,12 @@ const userValidator = require("../joi-validators/usersValidator");
 const registration = async (req, res) => {
   //below to validate the user from validators
 
-  const userValidationResults = userValidator.userValidator.validate(req.body, {
-    abortEarly: false,
-  });
+  const userValidationResults = userValidator.registerValidator.validate(
+    req.body,
+    {
+      abortEarly: false,
+    }
+  );
 
   let errorObj = {};
 
@@ -16,8 +19,8 @@ const registration = async (req, res) => {
     validationError.forEach((error) => {
       errorObj[error.context.key] = error.message;
     });
-
-    res.status(400).json(errorObj);
+    // console.log("Hello");
+    return res.status(400).json(errorObj);
   }
 
   let validatedUser = userValidationResults;
@@ -52,7 +55,7 @@ const registration = async (req, res) => {
 };
 //editProfile
 const profileEditing = async (req, res) => {
-  const userValidationResults = userValidator.userValidator.validate(req.body, {
+  const userValidationResults = userValidator.editValidator.validate(req.body, {
     abortEarly: false,
   });
 
@@ -65,7 +68,7 @@ const profileEditing = async (req, res) => {
       errorObj[error.context.key] = error.message;
     });
 
-    res.status(400).json(errorObj);
+    return res.status(400).json(errorObj);
   }
 
   try {

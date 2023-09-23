@@ -15,7 +15,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      minLength: 7,
       required: true,
     },
     isAdmin: {
@@ -23,17 +22,17 @@ const userSchema = new Schema(
       required: true,
       default: false,
     },
-    createdAt: {
-      Type: Date,
-      default: new Date(),
-    },
-  }
-  // { timestamps: true }
+    //   createdAt: {
+    //     Type: Date,
+    //     default: new Date(),
+    //   },
+  },
+  { timestamps: true }
 );
 
-userSchema.pre("save", async function () {
-  this.password = await bcrypt.hash(this.password, 12);
-});
+// userSchema.pre("save", async function () {
+//   this.password = await bcrypt.hash(this.password, 12);
+// });
 
 const User = mongoose.model("User", userSchema);
 
