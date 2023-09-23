@@ -6,7 +6,7 @@ import ProductDetails from '../page/ProductDetails';
 
 const ProductList = ({ selectedCategory }) => {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // Define setSelectedProduct
+  const [selectedProduct, setSelectedProduct] = useState(); // Define setSelectedProduct
 
   useEffect(() => {
     // Define the URL of your server
