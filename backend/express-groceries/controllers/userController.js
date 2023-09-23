@@ -1,12 +1,18 @@
+const bcrypt = require("bcrypt");
 const userModel = require("../Models/User");
 const userValidator = require("../joi-validators/usersValidator");
 
 const registration = async (req, res) => {
   //below to validate the user from validators
 
-  const userValidationResults = userValidator.userValidator.validate(req.body, {
-    abortEarly: false,
-  });
+  const userValidationResults = userValidator.registerValidator.validate(
+    req.body,
+    {
+      abortEarly: false,
+    }
+  );
+
+  // console.log(req.body);
 
   let errorObj = {};
 
@@ -16,17 +22,18 @@ const registration = async (req, res) => {
     validationError.forEach((error) => {
       errorObj[error.context.key] = error.message;
     });
-
-    res.status(400).json(errorObj);
+    console.log(errorObj);
+    return res.status(400).json(errorObj);
   }
 
   let validatedUser = userValidationResults;
 
   try {
-    validatedUser = await userModel.find({
+    validatedUser = await userModel.findOne({
       email: validatedUser.value.email,
     });
     if (validatedUser) {
+      // console.log(validatedUser);
       return res.status(409).json({ message: "User exists!" });
     }
   } catch (error) {
@@ -41,18 +48,13 @@ const registration = async (req, res) => {
     await userModel.create(user);
     return res.status(201).json({ message: "user created!" });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "failed to create user!" });
   }
-  const userData = {
-    name: user.name,
-    Email: user.Email,
-    userId: user._id,
-  };
-  return res.json(userData);
 };
 //editProfile
 const profileEditing = async (req, res) => {
-  const userValidationResults = userValidator.userValidator.validate(req.body, {
+  const userValidationResults = userValidator.editValidator.validate(req.body, {
     abortEarly: false,
   });
 
@@ -65,7 +67,7 @@ const profileEditing = async (req, res) => {
       errorObj[error.context.key] = error.message;
     });
 
-    res.status(400).json(errorObj);
+    return res.status(400).json(errorObj);
   }
 
   try {
@@ -98,7 +100,7 @@ const profileEditing = async (req, res) => {
 };
 
 const showUser = async (req, res) => {
-  let userId = req.params.id;
+  let userId = req.params.userId;
   try {
     const user = await userModel.findById(userId);
 
@@ -115,22 +117,21 @@ const showUser = async (req, res) => {
   };
 };
 
-
-const deleteUser = async(req,res)=>{
-  try{
-    const userId = req.params.id;
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
 
     const deletedUser = await userModel.findByIdAndDelete(userId);
 
-    IF(!deletedUser){
-      res.status(500).json({message:"User not exists"});
+    if (!deletedUser) {
+      res.status(500).json({ message: "User not exists" });
       return;
     }
-  }catch(error){
-    res.status(500).json({message:"failed to delete user!"});
+  } catch (error) {
+    res.status(500).json({ message: "failed to delete user!" });
   }
-  return res.status(200).json({message:"User deleted successfully!"})
-}
+  return res.status(200).json({ message: "User deleted successfully!" });
+};
 
 module.exports = {
   registration,

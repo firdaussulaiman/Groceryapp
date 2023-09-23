@@ -6,42 +6,41 @@ const validators = {
     name: Joi.string().min(3).max(30).trim().label("Name").required(),
     email: Joi.string()
       .trim()
-      .email()
-      .min(5)
-      .minDomainSegments(2) //  to verify the given domain and minmum is 2 segments
-      .domain({ tlds: { allow: ["com", "net"] } }) // top-level-domain is com and net.
+      .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }) //to check the domain segment and the top-level domain for the com and net.
       .label("Email")
       .required(),
-    password: Joi.string().min(4).max(16).label("Password").required(),
+    password: Joi.string().min(4).label("Password").required(),
     confirmPassword: Joi.string()
-      .equal(Joi.ref("Password"))
-      .label("Confirm password")
+      .equal(Joi.ref("password"))
       .required()
-      .messages({ "any.only": "{{lablel}} does not match!" }),
+      .label("Confirm password")
+      .messages({ "any.only": "{{#label}} does not match" }),
   }),
 
   loginValidator: Joi.object({
-    name: Joi.string().min(3).max(30).trim().label("Name").required(),
-    password: Joi.string().min(4).max(16).label("Password").required(),
+    email: Joi.string()
+      .trim()
+      .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+      .label("Email")
+      .required(),
+    password: Joi.string().min(4).label("Password").required(),
   }),
 
   editValidator: Joi.object({
     name: Joi.string().min(3).max(30).trim().label("Name"),
     email: Joi.string()
       .trim()
-      .email()
       .min(5)
-      .minDomainSegments(2)
-      .domain({ tlds: { allow: ["com", "net"] } })
+      .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }) //to check the domain segment and the top-level domain for the com and net.
       .label("Email"),
   }),
   changePasswordValidator: Joi.object({
-    currentPassword: Joi.string().min(3).label("Current Password").required(),
-    newPassword: Joi.string().min(4).max(16).label("New Password").required(),
+    currentPassword: Joi.string().min(4).label("Current Password").required(),
+    newPassword: Joi.string().min(4).label("New Password").required(),
     confirmNewPassword: Joi.string()
       .equal(Joi.ref("newPassword"))
-      .label("Confirm new password")
       .required()
+      .label("Confirm new password")
       .messages({ "any.only": "{{lablel}} does not match!" }),
   }),
 };
