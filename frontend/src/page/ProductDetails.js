@@ -1,51 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ProductList from '../component/ProductList';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; 
+import ProductCard from '../component/ProductCard';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
+  const { productId } = useParams(); // Use useParams hook to get productId
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Define a state to store the product data
-  const [productsData, setProductsData] = useState([]);
-
-  // Use an effect to fetch and update the product data
   useEffect(() => {
-    // Define a function to fetch product data
-    const fetchProductData = async () => {
-      try {
-        // Make an API request to fetch product data based on productId
-        const response = await fetch(`/api/products/${productId}`);
-        const data = await response.json();
+    // Define the URL of your server to fetch product details
+    const serverUrl = process.env.REACT_APP_SERVER_DOMAIN || 'http://localhost:5000';
+    const apiUrl = `${serverUrl}/products/${productId}`;
 
-        // Update the product data in the state
-        setProductsData(data);
-      } catch (error) {
-        console.error('Error fetching product data:', error);
-      }
-    };
+    // Make an HTTP GET request to fetch product details
+    axios
+      .get(apiUrl)
+      .then(response => {
+        setProduct(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+        setLoading(false);
+      });
+  }, [productId]); // Use productId directly as the dependency
 
-    // Call the fetchProductData function
-    fetchProductData();
-  }, [productId]);
-
-  // Find the product with the specified productId in the productsData
-  const product = productsData.find((p) => p._id === productId);
+  if (loading) {
+    return <p>Loading product details...</p>;
+  }
 
   if (!product) {
-    return <div>Product not found.</div>;
+    return <p>Product not found.</p>;
   }
 
   return (
     <div>
-      <ProductList selectedCategory={null} setProductsData={setProductsData} />
-      <div className="product-details">
-        <h2>{product.name}</h2>
-        <img src={product.image} alt={product.name} />
-        <p>Price: ${product.price.toFixed(2)}</p>
-        <p>Specification: {product.spec}</p>
-        <p>Category: {product.category}</p>
-        <p>Description: {product.description}</p>
-      </div>
+        <ProductCard
+          name={product.name}
+          description={product.description}
+          price={product.price}
+          image={product.image}
+          spec={product.spec}
+          category={product.category}
+        />
+
     </div>
   );
 };

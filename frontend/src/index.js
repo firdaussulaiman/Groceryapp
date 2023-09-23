@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import Home from './page/Home';
 import Login from './page/Login';
 import ShoppingCart from './page/ShoppingCart';
-import ProductList from './component/ProductList';
+
 import ProductDetails from './page/ProductDetails';
 
 // Create a root instance using createRoot
@@ -22,7 +22,7 @@ root.render(
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
-        <Route path="/" element={<ProductList />} />
+
         <Route path="/product/:productId" element={<ProductDetails />} />
       </Route>
     </Routes>
