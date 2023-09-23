@@ -1,41 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client'; // Import createRoot from "react-dom/client"
 import './index.css';
 import App from './App';
-import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { StrictMode } from 'react';
 
-
-//routes
+// Routes
 import Home from './page/Home';
 import Login from './page/Login';
 import ShoppingCart from './page/ShoppingCart';
 
+import ProductDetails from './page/ProductDetails';
 
+// Create a root instance using createRoot
+const root = createRoot(document.getElementById('root'));
 
-
-const router =createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route index element={<Home />} />
-<Route path="/login" element={<Login />} />
-<Route path="/shoppingcart" element={<ShoppingCart />} />
-
-
-    </Route>
-  )
-
-);
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StrictMode>
-  <RouterProvider router={router}/>
-  </StrictMode>
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/shoppingcart" element={<ShoppingCart />} />
+
+        <Route path="/product/:productId" element={<ProductDetails />} />
+      </Route>
+    </Routes>
+  </Router>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -1,0 +1,52 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; 
+import ProductCard from '../component/ProductCard';
+
+const ProductDetails = () => {
+  const { productId } = useParams(); // Use useParams hook to get productId
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Define the URL of your server to fetch product details
+    const serverUrl = process.env.REACT_APP_SERVER_DOMAIN || 'http://localhost:5000';
+    const apiUrl = `${serverUrl}/products/${productId}`;
+
+    // Make an HTTP GET request to fetch product details
+    axios
+      .get(apiUrl)
+      .then(response => {
+        setProduct(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+        setLoading(false);
+      });
+  }, [productId]); // Use productId directly as the dependency
+
+  if (loading) {
+    return <p>Loading product details...</p>;
+  }
+
+  if (!product) {
+    return <p>Product not found.</p>;
+  }
+
+  return (
+    <div>
+        <ProductCard
+          name={product.name}
+          description={product.description}
+          price={product.price}
+          image={product.image}
+          spec={product.spec}
+          category={product.category}
+        />
+
+    </div>
+  );
+};
+
+export default ProductDetails;
