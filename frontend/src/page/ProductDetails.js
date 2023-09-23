@@ -12,19 +12,25 @@ const ProductDetails = () => {
     // Define the URL of your server to fetch product details
     const serverUrl = process.env.REACT_APP_SERVER_DOMAIN || 'http://localhost:5000';
     const apiUrl = `${serverUrl}/products/${productId}`;
-
+  
     // Make an HTTP GET request to fetch product details
     axios
       .get(apiUrl)
       .then(response => {
-        setProduct(response.data);
+        // Log the response data to check its structure
+        console.log('Server Response:', response.data);
+  
+        // Handle the successful response here
+        setProduct(response.data.product);
         setLoading(false);
       })
       .catch(error => {
+        // Handle errors here
         console.error('Error fetching product details:', error);
         setLoading(false);
       });
-  }, [productId]); // Use productId directly as the dependency
+  }, [productId]);
+  // Use productId directly as the dependency
 
   if (loading) {
     return <p>Loading product details...</p>;
@@ -33,7 +39,7 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Product not found.</p>;
   }
-
+  console.log(product)
   return (
     <div>
         <ProductCard
