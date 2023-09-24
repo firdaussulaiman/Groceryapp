@@ -5,7 +5,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13146503_XL1_20230223.jpg?w=320&q=60",
     "spec": "2 per pack",
     "category": "Fruits",
-    "description": "Fresh seedless"
+    "description": "Fresh seedless",
+    "stock": 1000
   },
   {
     "name": "China Fuji Apple",

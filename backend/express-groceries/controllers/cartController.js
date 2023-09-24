@@ -9,8 +9,9 @@ const productModel = require("../Models/Product");
 const cartModel = require("../Models/Cart");
 const lineItem = require("../Models/LineItem");
 const userModel = require("../Models/User");
+const LineItems = require("../Models/LineItem");
 
-const addCarts = async (req, res) => {
+const addToCart = async (req, res) => {
   const userId = req.body.userId;
   const lineItemId = req.body.lineItemId;
   const quantity = req.body.quantity;
@@ -38,11 +39,39 @@ const addCarts = async (req, res) => {
       user: mongoose.Types.ObjectId(`${userId}`),
       checkOut: false,
     });
-    // check the cart is in the DB or not.
+    // check the cart is in the DB or not, if not create a new cart
     if (!userCart) {
-      const newUserCart = await cartModel.create({
-        user: moongoose.Types.ObjectId(`${userId}`),
+      const newCart = await cartModel.create({
+        user: mongoose.Types.ObjectId(`${userId}`),
       });
+
+      const lineItemExists = await lineItem.findOne({
+        user: mongoose.Types.ObjectId(`${userId}`),
+        cart: { $exists: false }, //to check the cart exists or not
+        product: mongoose.Types.ObjectId(`${productId}`),
+      });
+
+      if (lineItemExists) {
+        await lineItem.findByIdAndUpdate(lineItemExists._id, {
+          $inc: {
+            quantity,
+          },
+
+          cart: newCart._id,
+        });
+        //sort product stock reservation in the iteration of cart.
+        await productModel.findByIdAndUpdate(lineItemExists.product, {
+          $inc: {
+            stock: -quantity,
+          },
+        });
+
+        await cartModel.findByIdAndUpdate(newCart._id, {
+          $addToSet: {
+            lineItems: mongoose.Types.ObjectId(lineItemExists),
+          },
+        });
+      }
     }
   } catch (error) {
     console.log(error);
