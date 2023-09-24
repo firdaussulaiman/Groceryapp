@@ -9,7 +9,6 @@ const productModel = require("../Models/Product");
 const cartModel = require("../Models/Cart");
 const lineItem = require("../Models/LineItem");
 const userModel = require("../Models/User");
-const LineItems = require("../Models/LineItem");
 
 const addToCart = async (req, res) => {
   const userId = req.body.userId;
@@ -51,6 +50,7 @@ const addToCart = async (req, res) => {
         product: mongoose.Types.ObjectId(`${productId}`),
       });
 
+      // update the quantity if exists
       if (lineItemExists) {
         await lineItem.findByIdAndUpdate(lineItemExists._id, {
           $inc: {
@@ -65,15 +65,21 @@ const addToCart = async (req, res) => {
             stock: -quantity,
           },
         });
-
+        // assign the linets to the cart.
         await cartModel.findByIdAndUpdate(newCart._id, {
           $addToSet: {
             lineItems: mongoose.Types.ObjectId(lineItemExists),
           },
         });
+        return res.status(200).json({ message: "item added to cart" });
       }
     }
   } catch (error) {
     console.log(error);
+    return res.status(200).json({ message: "Unable to add item to the cart" });
   }
+};
+
+module.exports = {
+  addToCart,
 };
