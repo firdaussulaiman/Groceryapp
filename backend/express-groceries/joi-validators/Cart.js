@@ -4,7 +4,7 @@ const Joi = require("joi");
 const validators = {
   createCartValidator: Joi.object(),
   addToCartValidator: Joi.object({
-    id: Joi.string().label("Id").required(),
+    productId: Joi.string().label("Product Id").required(),
     quantity: Joi.number().min(1).label("Quantity").required(),
   }),
   updateCartValidator: Joi.object({
