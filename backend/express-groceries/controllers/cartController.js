@@ -35,13 +35,13 @@ const addCarts = async (req, res) => {
       return res.status(400).json(errorObject);
     }
     const userCart = await cartModel.findOne({
-      user: mongoose.Types.ObjectId("${userId}"),
+      user: mongoose.Types.ObjectId(`${userId}`),
       checkOut: false,
     });
     // check the cart is in the DB or not.
     if (!userCart) {
       const newUserCart = await cartModel.create({
-        user: moongoose.Types.ObjectId("${userId"),
+        user: moongoose.Types.ObjectId(`${userId}`),
       });
     }
   } catch (error) {
