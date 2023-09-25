@@ -1,5 +1,5 @@
 const express = require("express");
-// const autheController=require('../controllers/authController')
+const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 
 const router = express.Router();
@@ -14,8 +14,11 @@ router.get("/auth/signup", (req, res) => {
 
 router.get("/profile/:id", userController.showUser);
 
-router.delete("./profile/:id", userController.deleteUser);
+router.delete("/profile/:id", userController.deleteUser);
 
 router.put("./profile/:id", userController.profileEditing);
+
+//login route
+router.post("/auth/login", authController.logIn);
 
 module.exports = router;

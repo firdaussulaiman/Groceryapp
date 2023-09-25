@@ -5,14 +5,14 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const cartSchema = new Schema(
   {
     user: {
-      type: ObjectId,
-      require: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
 
     lineItems: [
       {
-        itemsId: ObjectId,
-        ref: "lineItem",
+        itemsId: Schema.Types.ObjectId,
+        ref: "LineItem",
         unique: true,
       },
     ],

@@ -15,6 +15,11 @@ const lineItemSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    quantity: {
+      type: Number,
+      required: true,
+      min: [1, "at least to be 1"],
+    },
   },
   { timestamps: true }
 );
