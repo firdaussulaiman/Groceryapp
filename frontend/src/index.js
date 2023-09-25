@@ -5,11 +5,13 @@ import App from './App';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
-
 // Routes
 import Home from './page/Home';
 import Login from './page/Login';
+import Signup from './page/Signup';
 import ShoppingCart from './page/ShoppingCart';
+import { store } from "./Redux/index";
+import { Provider } from "react-redux";
 
 import ProductDetails from './page/ProductDetails';
 
@@ -17,17 +19,19 @@ import ProductDetails from './page/ProductDetails';
 const root = createRoot(document.getElementById('root'));
 
 root.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/shoppingcart" element={<ShoppingCart />} />
-
-        <Route path="/product/:productId" element={<ProductDetails />} />
-      </Route>
-    </Routes>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/shoppingcart" element={<ShoppingCart />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/product/:productId" element={<ProductDetails />} />
+        </Route>
+      </Routes>
+    </Router>
+  </Provider>
 );
 
 reportWebVitals();
