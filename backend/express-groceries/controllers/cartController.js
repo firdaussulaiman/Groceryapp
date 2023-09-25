@@ -255,4 +255,5 @@ module.exports = {
   updateCart,
   checkout,
   showCart,
+  removeFromCart,
 };
