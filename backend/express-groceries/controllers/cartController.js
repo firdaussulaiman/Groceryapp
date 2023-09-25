@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const cartValidator = require("../joi-validators/Carts");
 
-const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 const productModel = require("../Models/Product");
@@ -10,6 +9,7 @@ const cartModel = require("../Models/Cart");
 const lineItemModel = require("../Models/LineItem");
 const userModel = require("../Models/User");
 
+//create carts
 const addToCart = async (req, res) => {
   const userId = req.params.userId;
   const productId = req.body.productId;
@@ -73,37 +73,36 @@ const addToCart = async (req, res) => {
         });
         return res.status(200).json({ message: "item added to cart" });
       }
-      if(!lineItemExists){
-         //create line item
-         let lineItem =await lineItemModel.create({
+      if (!lineItemExists) {
+        //create line item
+        let lineItem = await lineItemModel.create({
           cart: mongoose.Types.ObjectId(`${newCart._id}`),
           user: mongoose.Types.ObjectId(`${userId}`),
-          product: mongoose.Types.ObjectId('${productId}'),
+          product: mongoose.Types.ObjectId("${productId}"),
           quantity,
-         });
+        });
 
-         //assign to the cart
+        //assign to the cart
 
-         await cartModel.findByIdAndUpdate(userCart._id, {
+        await cartModel.findByIdAndUpdate(userCart._id, {
           $addToSet: {
             lineItems: mongoose.Types.ObjectId(lineItem),
           },
-         })
-         await productModel.findByIdAndUpdate(lineItem.product, {
-          $inc:{
-            stock: -quantity,
-          }
         });
-        return res.status(200).json({message:"item added to cart"});
+        await productModel.findByIdAndUpdate(lineItem.product, {
+          $inc: {
+            stock: -quantity,
+          },
+        });
+        return res.status(200).json({ message: "item added to cart" });
       }
-
     }
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: "Unable to add item to the cart" });
   }
 };
-
+// update cart
 const updateCart = async (req, res) => {
   const lineItemId = req.params.lineItemId;
   const quantity = req.body.quantity;
@@ -129,61 +128,131 @@ const updateCart = async (req, res) => {
 
   try {
     // Populate with the product stock.
-    const lineItem =await lineItemModele.findByIdAndUpdate(lineItemId).populate({
-      path:"product",
-      select:["stock"],
-    });
-    if(!lineItem){
-      return res.status(404).json({message:"line item not found!"});
+    const lineItem = await lineItemModele
+      .findByIdAndUpdate(lineItemId)
+      .populate({
+        path: "product",
+        select: ["stock"],
+      });
+    if (!lineItem) {
+      return res.status(404).json({ message: "line item not found!" });
     }
     let differenceOfStock = quantity - lineItem.quantity;
     await productModel.findByIdAndUpdate(lineItem.product, {
-      $inc:{
-            stock: -differenceOfStock,
-          }
+      $inc: {
+        stock: -differenceOfStock,
+      },
     });
     await lineItemModel.findByIdAndUpdate(lineItem, {
       quantity,
-    })
-    res.status(200).json({message:"Cart updated"});
-  }catch(e){
+    });
+    res.status(200).json({ message: "Cart updated" });
+  } catch (e) {
     console.log(e);
-    res.status(500).json({message:"unable to update!"});
+    res.status(500).json({ message: "unable to update!" });
   }
 };
 
-const showCart = async (req,res)=>{
+//showCart
+
+const showCart = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const userCart = await cartModel.findOne({
-      user:mongoose.Types.ObjectId(`${userId}`),
-      checkOut: false,
-    }).populate([
-      {
-        path:"lineItems",
-        select:["_id","quantity"],
-        populate:{
-          path:"product",
-          select:[
-            "name",
-            "price",
-
-          ]
-        }
-      }
-    ])
+    const userCart = await cartModel
+      .findOne({
+        user: mongoose.Types.ObjectId(`${userId}`),
+        checkOut: false,
+      })
+      .populate([
+        {
+          path: "lineItems",
+          select: ["_id", "quantity"],
+          populate: {
+            path: "product",
+            select: ["name", "price"],
+          },
+        },
+      ]);
+    //check the cart exists or not
+    if (!userCart) {
+      res.status(404).json({ message: "cart cannot be found" });
+    }
+    res.status(200).json(userCart);
+    // console.log(userCart);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "unable to load cart" });
   }
+};
 
+const removeFromCart = async (req, res) => {
+  const userId = req.params.userId;
+  const lineItemId = req.params.lineId;
 
-}
+  try {
+    const lineItemToBeDelete = await lineItemModel
+      .findById(lineItemId)
+      .populate({
+        path: "product",
+        select: ["stock"],
+      });
 
-// const removeFromCart =
+    //add stock back to stockcount
 
+    await productModel.findByIdAndUpdate(lineItemToBeDelete.product, {
+      $inc: {
+        stock: lineItemToBeDelete.quantity,
+      },
+    });
 
+    //remove from lineItem collection
 
+    await lineItemModel.findByIdAndDelete(lineItemId);
+
+    if (!lineItemToBeDelete) {
+      return res.status(404).json({ message: "line item not found" });
+    }
+
+    //remove lineItemId from cart array
+
+    await cartModel.findOneAndUpdate({
+      user: mongoose.Types.ObjectId(""),
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "unable to remove item from cart!" });
+  }
+};
+
+const checkout = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    //switch the cart to checkout
+
+    await cartModel.findByIdAndUpdate(
+      {
+        user: mongoose.Types.ObjectId(`${userId}`),
+        checkOut: false,
+      },
+      { chechout: true }
+    );
+
+    await cartModel.create({
+      user: mongoose.Types.ObjectId(`${userId}`),
+    });
+
+    res.status(200).json({ message: "purchase completed!" });
+  } catch (err) {
+    console.log(error),
+      res.status(500).json({ message: "Purchase not able to complete" });
+  }
+};
 
 module.exports = {
   addToCart,
-  updateCart
+  updateCart,
+  checkout,
+  showCart,
 };
