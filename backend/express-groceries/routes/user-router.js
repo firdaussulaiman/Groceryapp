@@ -8,9 +8,9 @@ const router = express.Router();
 router.post("/auth/register", userController.registration);
 
 //Testing
-router.get("/auth/signup", (req, res) => {
-  res.send("Sign-up page!");
-});
+// router.get("/auth/signup", (req, res) => {
+//   res.send("Sign-up page!");
+// });
 
 router.get("/profile/:id", userController.showUser);
 

@@ -32,6 +32,12 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    //for the inventry management,
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   {
     timestamps: true,

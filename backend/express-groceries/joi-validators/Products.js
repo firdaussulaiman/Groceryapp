@@ -9,6 +9,7 @@ const validators = {
     category: Joi.string().min(3).label("Category").required(),
     spec: Joi.string().min(2).label("Spec").required(),
     image: Joi.string().uri().label("Img URL").required(),
+    stock: Joi.number().min(0).label("Stock").required(),
   }),
 };
 
