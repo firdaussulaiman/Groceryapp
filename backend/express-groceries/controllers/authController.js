@@ -41,7 +41,7 @@ const logIn = async (req, res) => {
     return res.json({ message: errorMsg });
   }
 
-  const token = createSecreteToken(user._id);
+  const token = createSecretToken(user._id);
 
   res.status(201).json({
     message: "Log in successfully",
