@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Loginanimation from "../LogoPic/Loginanimation.gif";
 import { BiShow, BiHide } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { loginRedux } from "../Redux/userSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -14,7 +14,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-
+  const userData = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleShowPassword = () => {
@@ -32,15 +32,12 @@ const Login = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = data;
-    const serverUrl = process.env.REACT_APP_SERVER_DOMAIN || 'http://localhost:5000';
-    const apiUrl = `${serverUrl}/auth/login`; // Corrected variable name
-
     if (email && password) {
       try {
-        console.log('Sending request to:', apiUrl);
-        const response = await axios.post(apiUrl, { // Corrected variable name
-          email,
-          password,
+        const response = await axios.post("http://localhost:5000/auth/login", data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
         const dataRes = response.data;
@@ -54,12 +51,14 @@ const Login = () => {
             navigate("/");
           }, 1000);
         }
+
+        console.log(userData);
       } catch (error) {
-        console.error("Error logging in:", error);
+        console.error("Error:", error);
         toast("An error occurred while logging in.");
       }
     } else {
-      alert("Please enter required fields");
+      alert("Please Enter required fields");
     }
   };
 

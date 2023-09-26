@@ -28,6 +28,7 @@ const logIn = async (req, res) => {
 
   try {
     user = await userModel.findOne({ email: validatedUser.email });
+    console.log(user);
     if (!user) {
       return res.status(401).json({ message: errorMsg });
     }

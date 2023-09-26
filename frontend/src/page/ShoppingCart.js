@@ -1,9 +1,7 @@
-import React from "react";
+
 import { useSelector } from "react-redux";
 import Cart from "../component/Cart";
 import empty from "../LogoPic/empty.gif"
-import { toast } from "react-hot-toast";
-import {loadStripe} from '@stripe/stripe-js';
 import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
@@ -20,36 +18,7 @@ const ShoppingCart = () => {
 	  0
 	);
   
-	
-	
-	const handlePayment = async()=>{
-  
-		if(user.email){
-			
-			const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
-			const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/create-checkout-session`,{
-			  method : "POST",
-			  headers  : {
-				"content-type" : "application/json"
-			  },
-			  body  : JSON.stringify(productCartItem)
-			})
-			if(res.statusCode === 500) return;
-  
-			const data = await res.json()
-			console.log(data)
-  
-			toast("Redirect to payment Gateway...!")
-			stripePromise.redirectToCheckout({sessionId : data}) 
-		}
-		else{
-		  toast("You have not Login!")
-		  setTimeout(()=>{
-			navigate("/login")
-		  },1000)
-		}
-	  
-	}
+
 	return (
 	  <>
 	  
@@ -88,10 +57,10 @@ const ShoppingCart = () => {
 			  <div className="flex w-full py-2 text-lg border-b">
 				<p>Total Price</p>
 				<p className="ml-auto w-32 font-bold">
-				  <span className="text-red-500">₹</span> {totalPrice}
+				  <span className="text-red-500">$</span> {totalPrice}
 				</p>
 			  </div>
-			  <button className="bg-red-500 w-full text-lg font-bold py-2 text-white" onClick={handlePayment}>
+			  <button className="bg-red-500 w-full text-lg font-bold py-2 text-white">
 				Payment
 			  </button>
 			</div>
