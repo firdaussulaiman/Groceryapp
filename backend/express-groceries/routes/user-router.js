@@ -21,4 +21,6 @@ router.put("./profile/:id", userController.profileEditing);
 //login route
 router.post("/auth/login", authController.logIn);
 
+//show cart
+
 module.exports = router;
