@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../Models/User");
 const userValidator = require("../joi-validators/usersValidator");
-const { createSecreteToken } = require("../util/SecretToken");
+const { createSecretToken } = require("../util/SecretToken");
 
 //using function declaration
 const logIn = async (req, res) => {
@@ -27,7 +27,8 @@ const logIn = async (req, res) => {
   let user = null;
 
   try {
-    user = await userModel.find({ email: validatedUser.email });
+    user = await userModel.findOne({ email: validatedUser.email });
+    console.log(user);
     if (!user) {
       return res.status(401).json({ message: errorMsg });
     }
@@ -40,12 +41,13 @@ const logIn = async (req, res) => {
     return res.json({ message: errorMsg });
   }
 
-  const token = createSecreteToken(user._id);
+  const token = createSecretToken(user._id);
 
   res.status(201).json({
     message: "Log in successfully",
     success: true,
     token,
+    user: user._id,
   });
 };
 
