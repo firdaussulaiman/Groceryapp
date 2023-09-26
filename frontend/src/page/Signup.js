@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Loginanimation from "../LogoPic/Loginanimation.gif";
 import { BiShow, BiHide } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-import { BsEmojiSmileUpsideDown } from "react-icons/bs";
 import {ImagetoBase64} from "../Utility/imagetoBase64"
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
-function Signup() {
+const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -49,37 +49,42 @@ function Signup() {
 
   }
 console.log(process.env.REACT_APP_SERVER_DOMIN)
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const { firstName, email, password, confirmPassword } = data;
-    if (firstName && email && password && confirmPassword) {
-      if (password === confirmPassword) {
-    
-          const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/signup`,{
-            method : "POST",
-            headers : {
-              "content-type" : "application/json"
-            },
-            body : JSON.stringify(data)
-          })
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const { firstName, email, password, confirmPassword } = data;
 
-          const dataRes = await fetchData.json()
-    
+  if (firstName && email && password && confirmPassword) {
+    if (password === confirmPassword) {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_DOMAIN}/auth/register`,
+          data,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const dataRes = response.data;
 
         // alert(dataRes.message);
-        toast(dataRes.message)
-        if(dataRes.alert){
-          navigate("/login");
+        toast(dataRes.message);
+
+        if (dataRes.alert) {
+          navigate('/login');
         }
-       
-      } else {
-        alert("password and confirm password not equal");
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle any errors here
       }
     } else {
-      alert("Please Enter required fields");
+      alert('Password and confirm password do not match');
     }
-  };
-
+  } else {
+    alert('Please enter all required fields');
+  }
+};
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex  flex-col p-4">
