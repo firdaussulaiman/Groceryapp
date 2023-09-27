@@ -1,9 +1,9 @@
-import {React,useState} from "react";
+import {React} from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+
 import { addCartItem,increaseQty } from "../Redux/productSlide";
 
-const CardFeature = ({ image, name, price, category, loading, id }) => {
+const ProductCart = ({ image, name, price, category, loading, id }) => {
   const dispatch = useDispatch()
 
   const handleAddCartProduct = () => {
@@ -50,4 +50,4 @@ const CardFeature = ({ image, name, price, category, loading, id }) => {
   );
 };
 
-export default CardFeature;
+export default ProductCart;
