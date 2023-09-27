@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const productModel = require("../Models/Product");
 const cartModel = require("../Models/Cart");
 const lineItemModel = require("../Models/LineItem");
-const userModel = require("../Models/User");
+// const userModel = require("../Models/User");
 
 //create carts
 const addToCart = async (req, res) => {
@@ -33,13 +33,13 @@ const addToCart = async (req, res) => {
       return res.status(400).json(errorObject);
     }
     const userCart = await cartModel.findOne({
-      user: mongoose.Types.ObjectId(`${userId}`),
+      user: new mongoose.Types.ObjectId(`${userId}`),
       checkOut: false,
     });
     // check the cart is in the DB or not, if not create a new cart
     if (!userCart) {
       const newCart = await cartModel.create({
-        user: mongoose.Types.ObjectId(`${userId}`),
+        user: new mongoose.Types.ObjectId(`${userId}`),
       });
 
       console.log(newCart);
