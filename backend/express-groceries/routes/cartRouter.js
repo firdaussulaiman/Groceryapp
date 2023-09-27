@@ -17,3 +17,5 @@ router.patch("/:useId/cart/:lineItem/lineItem", cartController.updateCart);
 //show cart
 
 router.get("/:userId/cart", cartController.showCart);
+
+module.exports = router;

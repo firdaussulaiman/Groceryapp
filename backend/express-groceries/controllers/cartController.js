@@ -44,6 +44,8 @@ const addToCart = async (req, res) => {
         user: mongoose.Types.ObjectId(`${userId}`),
       });
 
+      console.log(newCart);
+
       const lineItemExists = await lineItemModel.findOne({
         user: mongoose.Types.ObjectId(`${userId}`),
         cart: { $exists: false }, //to check the cart exists or not
