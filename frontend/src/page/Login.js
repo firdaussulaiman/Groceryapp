@@ -34,7 +34,7 @@ const Login = () => {
     const { email, password } = data;
     if (email && password) {
       try {
-        const response = await axios.post("http://localhost:5000/auth/login", data, {
+        const response = await axios.post("http://localhost:5000/user/auth/login", data, {
           headers: {
             "Content-Type": "application/json",
           },
