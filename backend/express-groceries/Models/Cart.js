@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const cartSchema = new Schema(
   {
@@ -11,7 +10,7 @@ const cartSchema = new Schema(
 
     lineItems: [
       {
-        itemsId: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "LineItem",
         unique: true,
       },

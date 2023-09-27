@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const cartValidator = require("../joi-validators/Carts");
+const cartValidator = require("../joi-validators/Cart");
 
 const mongoose = require("mongoose");
 
