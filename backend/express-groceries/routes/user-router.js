@@ -1,6 +1,7 @@
 const express = require("express");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
+const cartController = require("../controllers/cartController");
 
 const router = express.Router();
 
@@ -20,5 +21,22 @@ router.put("./profile/:id", userController.profileEditing);
 
 //login route
 router.post("/auth/login", authController.logIn);
+
+//add to cart
+
+router.post("/cart/:userId", cartController.addToCart);
+
+//remove the items from cart
+router.delete(
+  "/:userId/cart/:lineItem/lineItem",
+  cartController.removeFromCart
+);
+
+//update cart
+router.patch("/:useId/cart/:lineItem/lineItem", cartController.updateCart);
+
+//show cart
+
+router.get("/cart/:userId", cartController.showCart);
 
 module.exports = router;

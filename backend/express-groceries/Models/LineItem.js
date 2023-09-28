@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const lineItemSchema = new Schema(
+const LineItemSchema = new Schema(
   {
     cart: {
       type: Schema.Types.ObjectId,
@@ -24,5 +24,5 @@ const lineItemSchema = new Schema(
   { timestamps: true }
 );
 
-const LineItems = mongoose.model("LineItem", lineItemSchema);
-module.exports = LineItems;
+const LineItem = mongoose.model("LineItem", LineItemSchema);
+module.exports = LineItem;

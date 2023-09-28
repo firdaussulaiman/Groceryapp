@@ -15,6 +15,7 @@ require("./Seeds/seeds");
 var indexRouter = require("./routes/index");
 const productsRouter = require("./routes/productsRouter");
 const usersRouter = require("./routes/user-router");
+const cartRouter = require("./routes/cartRouter");
 // const { config } = require("dotenv");
 
 var app = express();
@@ -33,6 +34,9 @@ app.use(cors());
 app.use("/user", usersRouter);
 //products router
 app.use("/products", productsRouter);
+
+// //cart router
+// app.use("/api", cartRouter);
 
 app.get("/", (req, res) => {
   res.send("This is the server for Project 3!");
