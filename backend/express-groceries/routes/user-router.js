@@ -22,7 +22,9 @@ router.put("./profile/:id", userController.profileEditing);
 //login route
 router.post("/auth/login", authController.logIn);
 
-router.post("/:userId/cart", cartController.addToCart);
+//add to cart
+
+router.post("/cart/:userId", cartController.addToCart);
 
 //remove the items from cart
 router.delete(
@@ -35,6 +37,6 @@ router.patch("/:useId/cart/:lineItem/lineItem", cartController.updateCart);
 
 //show cart
 
-router.get("/:userId/cart", cartController.showCart);
+router.get("/cart/:userId", cartController.showCart);
 
 module.exports = router;
