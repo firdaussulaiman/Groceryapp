@@ -32,7 +32,7 @@ const addToCart = async (req, res) => {
       return res.status(400).json(errorObject);
     }
     console.log(1);
-    const userCart = await cartModel.findOne({
+    let userCart = await cartModel.findOne({
       user: new mongoose.Types.ObjectId(`${userId}`),
       checkOut: false,
     });
@@ -140,12 +140,12 @@ const updateCart = async (req, res) => {
     if (!lineItem) {
       return res.status(404).json({ message: "line item not found!" });
     }
-    let differenceOfStock = quantity - lineItem.quantity;
-    await productModel.findByIdAndUpdate(lineItem.product, {
-      $inc: {
-        stock: -differenceOfStock,
-      },
-    });
+    // let differenceOfStock = quantity - lineItem.quantity;
+    // await productModel.findByIdAndUpdate(lineItem.product, {
+    //   $inc: {
+    //     stock: -differenceOfStock,
+    //   },
+    // });
     await lineItemModel.findByIdAndUpdate(lineItem, {
       quantity,
     });
@@ -220,7 +220,7 @@ const removeFromCart = async (req, res) => {
     //remove lineItemId from cart array
 
     await cartModel.findOneAndUpdate({
-      user: mongoose.Types.ObjectId(""),
+      user: new mongoose.Types.ObjectId(""),
     });
   } catch (err) {
     console.log(err);
