@@ -6,7 +6,7 @@
     "spec": "2 per pack",
     "category": "Fruits",
     "description": "Fresh seedless",
-    "stock": 1000
+    "stock": 200
   },
   {
     "name": "China Fuji Apple",
@@ -14,7 +14,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13146503_XL1_20230223.jpg?w=320&q=60",
     "spec": "5 per pack",
     "category": "Fruits",
-    "description": "China Premium Fuji Apple"
+    "description": "China Premium Fuji Apple",
+    "stock": 200
   },
   {
     "name": "Double FP Thai Hom Mali Premium Quality Frangant Rice",
@@ -22,7 +23,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13097846_XL1_20230503.jpg?w=320&q=60",
     "spec": "from Thailand, 5kg",
     "category": "Rice, Noodles & Cooking Ingredients",
-    "description": "Double FP Thai Hom Mali Premium Quality Fragrant Rice"
+    "description": "Double FP Thai Hom Mali Premium Quality Fragrant Rice",
+    "stock": 200
   },
   {
     "name": "Hokto Mushroom-White Shimeiji",
@@ -30,7 +32,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/11212658_XL1_20221123.jpg?w=320&q=60",
     "spec": "100g",
     "category": "Vegetables",
-    "description": "White Shimeiji From Malaysia"
+    "description": "White Shimeiji From Malaysia",
+    "stock": 200
   },
   {
     "name": "Kleenex Toilet Tissue Rolls",
@@ -38,7 +41,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13093697_XL1_20230822.jpg?w=320&q=60",
     "spec": "20 X 200 per pack",
     "category": "Paper & Tissue",
-    "description": "Kleenex Toilet Tissue Rolls - Ultra Soft (3 ply)"
+    "description": "Kleenex Toilet Tissue Rolls - Ultra Soft (3 ply)",
+    "stock": 200
   },
   {
     "name": "Natural Olive Oil-Pure 2L(Halal)",
@@ -46,7 +50,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/12496736_XL1_20230704.jpg?w=320&q=60",
     "spec": "2L,Halal",
     "category": "Rice, Noodles & Cooking Ingredients",
-    "description": "Naturel Pure Olive Oil, made from quality Spanish olives"
+    "description": "Naturel Pure Olive Oil, made from quality Spanish olives",
+    "stock": 200
   },
   {
     "name": "Parsa prepacked Carrots",
@@ -54,7 +59,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13000321_XL1_20221122.jpg?w=320&q=60",
     "spec": "500g",
     "category": "Vegetables",
-    "description": "Parsa prepacked Carrots"
+    "description": "Parsa prepacked Carrots",
+    "stock": 200
   },
   {
     "name": "Parsa fresh Eggs",
@@ -62,7 +68,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/11194824_XL1.jpg?w=320&q=60",
     "spec": "30 per pack,1.5kg",
     "category": "Dairy, Chilled & Eggs",
-    "description": "Parsa eggs"
+    "description": "Parsa eggs",
+    "stock": 200
   },
   {
     "name": "Orgo Fresh Broccoli",
@@ -70,7 +77,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/90153099_XL1_20221124.jpg?w=320&q=60",
     "spec": "280g",
     "category": "Vegetables",
-    "description": "Fresh and natural Broccoli"
+    "description": "Fresh and natural Broccoli",
+    "stock": 200
   },
   {
     "name": "Fresh Blueberries",
@@ -78,7 +86,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/10632060_XL1_20201014.jpg?w=320&q=60",
     "spec": "125g,Zimbabwe",
     "category": "Fruits",
-    "description": " Fragrant & Juicy"
+    "description": " Fragrant & Juicy",
+    "stock": 200
   },
   {
     "name": "Dynamo Power Gel Laundry Detergent Refill-Downy ",
@@ -86,7 +95,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13191847_XL1_20230914.jpg?w=320&q=60",
     "spec": "2.4kg",
     "category": "Household",
-    "description": "Laundry Detergent Refill - Downy"
+    "description": "Laundry Detergent Refill - Downy",
+    "stock": 200
   },
   {
     "name": "Dairylea Cheddar Cheese - Block ",
@@ -94,7 +104,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/10729241_XL1_20230914.jpg?w=320&q=60",
     "spec": "250g",
     "category": "Dairy, Chilled & Eggs",
-    "description": " Made from natural milk"
+    "description": " Made from natural milk",
+    "stock": 200
   },
   {
     "name": "Mama Lemon Dishwashing liquid ",
@@ -102,7 +113,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/12391096_XL1.jpg?w=320&q=60",
     "spec": "3 x 600ml",
     "category": "Household",
-    "description": " Mama Lemon Dishwashing Liquid Refill - Natural Lemon"
+    "description": " Mama Lemon Dishwashing Liquid Refill - Natural Lemon",
+    "stock": 200
   },
   {
     "name": "MagiClean Toilet Bleach Power Cleaner",
@@ -110,7 +122,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/11951709_XL1_20230914.jpg?w=320&q=60",
     "spec": "3 x 500ml",
     "category": "Household",
-    "description": "MagiClean Toilet Bleach Cleaner"
+    "description": "MagiClean Toilet Bleach Cleaner",
+    "stock": 200
   },
   {
     "name": "Pursoft Facial Tissue",
@@ -118,7 +131,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/11951709_XL1_20230914.jpg?w=320&q=60",
     "spec": "3 x 120 per pack",
     "category": "Paper & Tissue",
-    "description": "PurSoft Facial Tissue soft pack(3ply)"
+    "description": "PurSoft Facial Tissue soft pack(3ply)",
+    "stock": 200
   },
   {
     "name": "Fairprice 3 in 1 instant coffee",
@@ -126,7 +140,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/12217602_XL1_20221231.jpg?w=320&q=60",
     "spec": "40 x 20g",
     "category": "Drinks",
-    "description": "FairPrice 3 in 1 Instant Coffee Mix - Creamer & Sugar"
+    "description": "FairPrice 3 in 1 Instant Coffee Mix - Creamer & Sugar",
+    "stock": 200
   },
   {
     "name": "Nescafe 3 in 1 Instant Coffee",
@@ -134,7 +149,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13215146_XL1_20230728.jpg?w=320&q=60",
     "spec": "33 x 19g",
     "category": "Drinks",
-    "description": "Nescafe 3 in 1 Instant Coffee - Original"
+    "description": "Nescafe 3 in 1 Instant Coffee - Original",
+    "stock": 200
   },
   {
     "name": "Tiger Larger Beer Can",
@@ -142,7 +158,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13057646_XL1_20230113.jpg?w=320&q=60",
     "spec": "10x 320ml",
     "category": "Beer,Wine & Sprits",
-    "description": "Tiger Larger Beer-Can"
+    "description": "Tiger Larger Beer-Can",
+    "stock": 200
   },
   {
     "name": "Sapporo Premium Can Beer",
@@ -150,7 +167,8 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13022342_XL1_20230210.jpg?w=320&q=60",
     "spec": "6 X 330ml",
     "category": "Beer,Wine & Sprits",
-    "description": "Sapporo Premium Can Beer"
+    "description": "Sapporo Premium Can Beer",
+    "stock": 200
   },
   {
     "name": "Conchatoro Gran Reserva Cabernet Sauvignon",
@@ -158,6 +176,7 @@
     "image": "https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/13225540_XL1_20230502.jpg?w=320&q=60",
     "spec": "750ml",
     "category": "Beer,Wine & Sprits",
-    "description": "Conchatoro Gran Reserva Cabernet Sauvignon"
+    "description": "Conchatoro Gran Reserva Cabernet Sauvignon",
+    "stock": 200
   }
 ]
