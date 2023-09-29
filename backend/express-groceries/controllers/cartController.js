@@ -171,10 +171,10 @@ const showCart = async (req, res) => {
         {
           path: "lineItems",
           select: ["_id", "quantity"],
-          populate: {
-            path: "product",
-            select: ["name", "price"],
-          },
+          // populate: {
+          //   path: "product",
+          //   select: ["name", "price"],
+          // },
         },
       ]);
     //check the cart exists or not
