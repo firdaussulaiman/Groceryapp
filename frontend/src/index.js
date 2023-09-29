@@ -10,6 +10,7 @@ import Home from './page/Home';
 import Login from './page/Login';
 import Signup from './page/Signup';
 import ShoppingCart from './page/ShoppingCart';
+import NewProduct from './page/NewProduct';
 import { store } from "./Redux/index";
 import { Provider } from "react-redux";
 
@@ -28,6 +29,7 @@ root.render(
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/product/:productId" element={<ProductDetails />} />
+          <Route path="/newproduct" element={<NewProduct />} />
         </Route>
       </Routes>
     </Router>

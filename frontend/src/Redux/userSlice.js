@@ -5,9 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
- 
   email: "",
-  
 };
 
 export const userSlice = createSlice({
@@ -17,13 +15,9 @@ export const userSlice = createSlice({
     loginRedux: (state, action) => {
       console.log(action.payload.data);
       //   state.user = action.payload.data;
- 
-    
       state.email = action.payload.data.email;
-
     },
     logoutRedux: (state, action) => {
-   
       state.email = "";
     },
   },
