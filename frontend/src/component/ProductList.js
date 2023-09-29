@@ -7,6 +7,7 @@ import ProductDetails from '../page/ProductDetails';
 const ProductList = ({ selectedCategory }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  
 
   useEffect(() => {
     // Define the URL of your server
@@ -38,7 +39,6 @@ const ProductList = ({ selectedCategory }) => {
 
   // Log selectedCategory and filteredProducts for debugging
   useEffect(() => {
-    console.log("Selected Category:", selectedCategory);
     console.log("Filtered Products:", filteredProducts);
   }, [selectedCategory, filteredProducts]);
   
