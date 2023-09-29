@@ -7,7 +7,7 @@ const LineItemSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Cart",
     },
-    product: {
+    item: {
       type: Schema.Types.ObjectId,
       ref: "Product",
     },
