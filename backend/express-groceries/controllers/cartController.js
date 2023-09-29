@@ -141,7 +141,7 @@ const updateCart = async (req, res) => {
       return res.status(404).json({ message: "line item not found!" });
     }
     // let differenceOfStock = quantity - lineItem.quantity;
-    // await productModel.findByIdAndUpdate(lineItem.product, {
+    // await productModel.findByIdAndUpdate(lineItem.item, {
     //   $inc: {
     //     stock: -differenceOfStock,
     //   },
@@ -182,7 +182,7 @@ const showCart = async (req, res) => {
       res.status(404).json({ message: "cart cannot be found" });
     }
     console.log(2);
-    console.log(userCart.lineItems[0].item);
+    console.log(userCart.lineItems[0]);
     res.status(200).json(userCart);
     // console.log(userCart);
   } catch (err) {
@@ -199,7 +199,7 @@ const removeFromCart = async (req, res) => {
     const lineItemToBeDelete = await lineItemModel
       .findById(lineItemId)
       .populate({
-        path: "product",
+        path: "item",
         select: ["stock"],
       });
 
