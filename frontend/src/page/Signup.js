@@ -11,12 +11,10 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    image : ""
   });
 
   const handleShowPassword = () => {
@@ -48,16 +46,16 @@ const Signup = () => {
       })
 
   }
-console.log(process.env.REACT_APP_SERVER_DOMIN)
+
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const { firstName, email, password, confirmPassword } = data;
+  const { name, email, password, confirmPassword } = data;
 
-  if (firstName && email && password && confirmPassword) {
+  if (name && email && password && confirmPassword) {
     if (password === confirmPassword) {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_SERVER_DOMAIN}/auth/register`,
+          `http://localhost:5000/user/auth/register`,
           data,
           {
             headers: {
@@ -65,7 +63,7 @@ const handleSubmit = async (e) => {
             },
           }
         );
-
+console.log(response)
         const dataRes = response.data;
 
         // alert(dataRes.message);
@@ -101,23 +99,13 @@ const handleSubmit = async (e) => {
         </div>
 
         <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="firstName">Name</label>
           <input
             type={"text"}
-            id="firstName"
-            name="firstName"
+            id="name"
+            name="name"
             className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
-            value={data.firstName}
-            onChange={handleOnChange}
-          />
-
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type={"text"}
-            id="lastName"
-            name="lastName"
-            className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
-            value={data.lastName}
+            value={data.name}
             onChange={handleOnChange}
           />
 
