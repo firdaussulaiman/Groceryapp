@@ -1,30 +1,49 @@
 import React, { useState } from "react";
 
 const Filter = ({ categories, onSelectCategory }) => {
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const handleCategoryChange = (event) => {
     const category = event.target.value;
-    setSelectedCategory(category);
-    onSelectCategory(category);
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
   };
+
+  const applyFilters = () => {
+    onSelectCategory(selectedCategories);
+  };
+  
 
   return (
     <div>
-      <label htmlFor="category">Filter by Category:</label>
-      <select
-        id="category"
-        name="category"
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-      >
-        <option value="">All</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+      <label>Filter by Category:</label>
+      {categories.map((category, index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            id={`category-${index}`}
+            name={`category-${index}`}
+            value={category}
+            checked={selectedCategories.includes(category)}
+            onChange={handleCategoryChange}
+          />
+          <label htmlFor={`category-${index}`}>{category}</label>
+        </div>
+      ))}
+      <button onClick={applyFilters}>Apply Filters</button>
+
+      {/* Display selected categories */}
+      <div>
+        <strong>Selected Categories:</strong>
+        <ul>
+          {selectedCategories.map((category, index) => (
+            <li key={index}>{category}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
