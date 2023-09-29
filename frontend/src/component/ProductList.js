@@ -4,10 +4,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ProductDetails from '../page/ProductDetails';
 
-const ProductList = ({ selectedCategory }) => {
+const ProductList = ({ selectedCategory, selectedPriceRange }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
 
   useEffect(() => {
     // Define the URL of your server
@@ -23,29 +22,33 @@ const ProductList = ({ selectedCategory }) => {
         console.error('Error fetching product data:', error);
       });
   }, []);
-  useEffect(() => {
-    products.forEach(product => {
-      console.log("_id:", product._id);
-    });
-  }, [products]);
+
   const handleProductClick = productId => {
     setSelectedProduct(productId);
   };
 
-  // Define filteredProducts early in the function scope
-  const filteredProducts = selectedCategory
-    ? products.filter(product => product.category === selectedCategory)
-    : products;
+  // Define filteredProducts based on selectedCategory and selectedPriceRange
+  const filteredProducts = products.filter(product => {
+    const categoryMatch = !selectedCategory || product.category === selectedCategory;
+    
+    // Define price range comparisons based on selectedPriceRange
+    let priceMatch = true;
+    if (selectedPriceRange === '<10') {
+      priceMatch = product.price < 10;
+    } else if (selectedPriceRange === '<20') {
+      priceMatch = product.price < 20;
+    } else if (selectedPriceRange === '<50') {
+      priceMatch = product.price < 50;
+    }
 
-  // Log selectedCategory and filteredProducts for debugging
-  useEffect(() => {
-    console.log("Filtered Products:", filteredProducts);
-  }, [selectedCategory, filteredProducts]);
-  
+    // Return true if both categoryMatch and priceMatch are true
+    return categoryMatch && priceMatch;
+  });
+
   return (
     <div className="product-list-container">
-      <div className="grid grid-cols-0 md:grid-cols-2 lg:grid-cols-4 gap-2 p-0 shadow-lg overflow-scroll scrollbar-none mx-auto">
-      {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 p-0 shadow-lg overflow-scroll scrollbar-none mx-auto">
+        {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
             <div
               key={product._id}
