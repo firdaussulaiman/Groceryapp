@@ -26,7 +26,7 @@ const addToCart = async (req, res) => {
       const validationError = lineItemValidationResults.error.details;
 
       validationError.forEach((error) => {
-        errorObject[error.context.error] = error.message;
+        errorObject[error.context.key] = error.message;
       });
       //send the response to client and return;
       return res.status(400).json(errorObject);
@@ -134,14 +134,14 @@ const updateCart = async (req, res) => {
     const lineItem = await lineItemModel
       .findByIdAndUpdate(lineItemId)
       .populate({
-        path: "product",
+        path: "item",
         select: ["stock"],
       });
     if (!lineItem) {
       return res.status(404).json({ message: "line item not found!" });
     }
     // let differenceOfStock = quantity - lineItem.quantity;
-    // await productModel.findByIdAndUpdate(lineItem.product, {
+    // await productModel.findByIdAndUpdate(lineItem.item, {
     //   $inc: {
     //     stock: -differenceOfStock,
     //   },
@@ -172,7 +172,7 @@ const showCart = async (req, res) => {
           path: "lineItems",
           select: ["_id", "quantity"],
           populate: {
-            path: "product",
+            path: "item",
             select: ["name", "price"],
           },
         },
@@ -181,6 +181,8 @@ const showCart = async (req, res) => {
     if (!userCart) {
       res.status(404).json({ message: "cart cannot be found" });
     }
+    console.log(2);
+    console.log(userCart.lineItems[0]);
     res.status(200).json(userCart);
     // console.log(userCart);
   } catch (err) {
@@ -197,7 +199,7 @@ const removeFromCart = async (req, res) => {
     const lineItemToBeDelete = await lineItemModel
       .findById(lineItemId)
       .populate({
-        path: "product",
+        path: "item",
         select: ["stock"],
       });
 

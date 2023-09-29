@@ -35,7 +35,6 @@ const logIn = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Fail to get user!" });
   }
-
   const auth = await bcrypt.compare(validatedUser.password, user.password);
   if (!auth) {
     return res.json({ message: errorMsg });
