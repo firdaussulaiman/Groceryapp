@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; 
-import ProductCard from '../component/ProductCard';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addCartItem } from '../Redux/productSlide';
+import Zoom from 'react-image-zoom';
 
 const ProductDetails = () => {
-  const { productId } = useParams(); // Use useParams hook to get productId
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Define the URL of your server to fetch product details
     const serverUrl = process.env.REACT_APP_SERVER_DOMAIN || 'http://localhost:5000';
     const apiUrl = `${serverUrl}/products/${productId}`;
-  
-    // Make an HTTP GET request to fetch product details
+
     axios
       .get(apiUrl)
-      .then(response => {
-        // Log the response data to check its structure
+      .then((response) => {
         console.log('Server Response:', response.data);
-  
-        // Handle the successful response here
         setProduct(response.data.product);
         setLoading(false);
       })
-      .catch(error => {
-        // Handle errors here
+      .catch((error) => {
         console.error('Error fetching product details:', error);
         setLoading(false);
       });
   }, [productId]);
-  // Use productId directly as the dependency
 
   if (loading) {
     return <p>Loading product details...</p>;
@@ -39,18 +35,54 @@ const ProductDetails = () => {
   if (!product) {
     return <p>Product not found.</p>;
   }
-  console.log(product)
-  return (
-    <div>
-        <ProductCard
-          name={product.name}
-          description={product.description}
-          price={product.price}
-          image={product.image}
-          spec={product.spec}
-          category={product.category}
-        />
 
+  const { image, name, price, category, spec, stock } = product;
+
+  const handleAddCartProduct = () => {
+    dispatch(
+      addCartItem({
+        _id: productId,
+        name: name,
+        price: price,
+        category: category,
+        image: image,
+      })
+    );
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex">
+        <div className="w-1/2 pr-4 relative">
+          {/* Large image */}
+          <Zoom img={image} zoomScale={3} width={400} height={400} />
+        </div>
+        <div className="w-1/2 ml-4 relative">
+          {/* Product details */}
+          <div className="max-w-[400px] bg-white hover:shadow-lg drop-shadow-lg py-4 px-8 cursor-pointer flex flex-col items-center relative">
+            <h3 className="font-semibold text-slate-600 capitalize text-lg mt-2">
+              {name}
+            </h3>
+            {/* Small image */}
+            <div className="h-[200px] w-[200px] mb-2">
+              <img src={image} alt={name} className="h-full w-full object-cover" />
+            </div>
+            <p className="text-slate-500 font-medium">{category}</p>
+            <p className="font-bold">
+              <span className="text-red-500">$</span>
+              <span>{price}</span>
+            </p>
+            <p className="text-gray-600">Spec: {spec}</p>
+            <p className="text-gray-600">Stock: {stock}</p>
+            <button
+              className="bg-yellow-500 py-1 mt-2 w-full"
+              onClick={handleAddCartProduct}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

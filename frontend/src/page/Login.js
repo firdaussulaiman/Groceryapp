@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {React, useState,useEffect } from "react";
 import Loginanimation from "../LogoPic/Loginanimation.gif";
 import { BiShow, BiHide } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import { loginRedux } from "../Redux/userSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
+
+
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +16,8 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const userData = useSelector((state) => state);
+  const userName = useSelector((state) => state.name);
+  const userEmail = useSelector((state) => state.user.email);
   const dispatch = useDispatch();
 
   const handleShowPassword = () => {
@@ -28,7 +31,12 @@ const Login = () => {
       [name]: value,
     }));
   };
-
+  useEffect(() => {
+    console.log("userEmail:", userEmail); // Log userEmail when it changes
+    if (userEmail) {
+      navigate("/");
+    }
+  }, [userEmail, navigate]);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = data;
@@ -42,17 +50,20 @@ const Login = () => {
 
         const dataRes = response.data;
         console.log(dataRes);
+        console.log("userEmail:", userEmail);
 
         toast(dataRes.message);
 
         if (dataRes.alert) {
           dispatch(loginRedux(dataRes));
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          //setTimeout(() => {
+           // navigate("/");
+          
+          //}, 1000);
         }
 
-        console.log(userData);
+  
+
       } catch (error) {
         console.error("Error:", error);
         toast("An error occurred while logging in.");
@@ -62,6 +73,7 @@ const Login = () => {
     }
   };
 
+  
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">

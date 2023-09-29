@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-
 import ProductList from "../component/ProductList";
 import Filter from "../component/Filter";
 
@@ -14,7 +12,7 @@ const Home = () => {
     "Paper & Tissue",
     "Household",
     "Drinks",
-    "Beer,Wine & Sprits",
+    "Beer,Wine & Spirits",
   ];
 
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -24,14 +22,16 @@ const Home = () => {
   };
 
   return (
-    <div>
-    
-
-        {/* Pass categories and onSelectCategory to the Filter component */}
+    <div className="flex">
+      {/* Filter component */}
+      <div className="w-1/4 p-4">
         <Filter categories={categories} onSelectCategory={handleCategorySelect} />
-        {/* Pass the selected category to the ProductList component */}
+      </div>
+
+      {/* ProductList component */}
+      <div className="w-3/4 p-4">
         <ProductList selectedCategory={selectedCategory} />
-    
+      </div>
     </div>
   );
 };
