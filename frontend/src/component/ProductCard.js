@@ -1,9 +1,9 @@
 import {React} from "react";
 import { useDispatch } from "react-redux";
 
-import { addCartItem,increaseQty } from "../Redux/productSlide";
+import { addCartItem} from "../Redux/productSlide";
 
-const ProductCard = ({ image, name, price, category, loading, id }) => {
+const ProductCart = ({ image, name, price, category, loading, id }) => {
   const dispatch = useDispatch()
 
   const handleAddCartProduct = () => {
@@ -41,6 +41,7 @@ const ProductCard = ({ image, name, price, category, loading, id }) => {
           >
             Add Cart
           </button>
+       
         </>
       ) : (
         <div className="min-h-[150px] flex justify-center items-center">
@@ -52,4 +53,4 @@ const ProductCard = ({ image, name, price, category, loading, id }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCart;

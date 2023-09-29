@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
-
+const tokenLocalStorage = localStorage.getItem("token")
 
 const initialState = {
+  token : localStorage.getItem("token"),
+  data: {
+  name: "", // Add any other fields you need
   email: "",
+  password: "",
+  isAdmin: false,
+  },
 };
 
 export const userSlice = createSlice({
@@ -13,16 +17,18 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginRedux: (state, action) => {
-      console.log(action.payload.data);
-      //   state.user = action.payload.data;
-      state.email = action.payload.data.email;
+      state.data = action.payload;
+      state.data.email = action.payload.email;  // Access the entire payload
     },
     logoutRedux: (state, action) => {
-      state.email = "";
+      state.data = {};
+      state.token = ""
+      localStorage.clear()
     },
   },
 });
 
-export const { loginRedux ,logoutRedux,} = userSlice.actions;
+
+export const { loginRedux, logoutRedux, setToken, } = userSlice.actions;
 
 export default userSlice.reducer;

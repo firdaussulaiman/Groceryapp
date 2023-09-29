@@ -13,6 +13,7 @@ import ShoppingCart from './page/ShoppingCart';
 import NewProduct from './page/NewProduct';
 import { store } from "./Redux/index";
 import { Provider } from "react-redux";
+import TestComponent from './page/TestComponent';
 
 import ProductDetails from './page/ProductDetails';
 
@@ -26,6 +27,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/test" element={<TestComponent/>} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/product/:productId" element={<ProductDetails />} />

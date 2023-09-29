@@ -22,14 +22,14 @@ export const productSlice = createSlice({
         const total = action.payload.price;
         state.cartItem = [
           ...state.cartItem,
-          { ...action.payload, qty: 1, total: total },
+          { ...action.payload, qty: 0, total: total },
         ];
       }
     },
     deleteCartItem: (state, action) => {
       toast("one Item Delete");
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
-      state.cartItem.splice(index, 2);
+      state.cartItem.splice(index, 1);
       console.log(index);
     },
     increaseQty: (state, action) => {

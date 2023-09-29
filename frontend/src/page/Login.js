@@ -1,79 +1,85 @@
-import {React, useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Loginanimation from "../LogoPic/Loginanimation.gif";
 import { BiShow, BiHide } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
-import { loginRedux } from "../Redux/userSlice";
+import { loginRedux ,setToken} from "../Redux/userSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
-
-
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
-  const [data, setData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const userName = useSelector((state) => state.name);
-  const userEmail = useSelector((state) => state.user.email);
-  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    // Check if the user is already logged in
+    const userToken = localStorage.getItem("token"); // You may need to adapt this to your actual token storage method
+    if (userToken) {
+  console.log("userToken:",userToken)
+    }
+  }, [navigate]);
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleOnChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
-  useEffect(() => {
-    console.log("userEmail:", userEmail); // Log userEmail when it changes
-    if (userEmail) {
-      navigate("/");
-    }
-  }, [userEmail, navigate]);
-  const handleOnSubmit = async (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
+
+    const { email, password } = formData;
+
     if (email && password) {
       try {
-        const response = await axios.post("http://localhost:5000/user/auth/login", data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.post(
+          "http://localhost:5000/user/auth/login",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const dataRes = response.data;
-        console.log(dataRes);
-        console.log("userEmail:", userEmail);
+        console.log(response.data)
 
+        // Dispatch a Redux action with the login data
+        dispatch(loginRedux(dataRes));
+
+        // Save token in local storage for future requests
+        localStorage.setItem("token", dataRes.token);
+               
+        // Display a toast message
         toast(dataRes.message);
-
-        if (dataRes.alert) {
-          dispatch(loginRedux(dataRes));
-          //setTimeout(() => {
-           // navigate("/");
-          
-          //}, 1000);
+        console.log("dataRes.alert:", dataRes.alert);
+        if (dataRes.success) {      
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         }
-
-  
-
       } catch (error) {
         console.error("Error:", error);
         toast("An error occurred while logging in.");
       }
     } else {
-      alert("Please Enter required fields");
+      alert("Please enter required fields");
     }
   };
 
-  
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
@@ -81,15 +87,15 @@ const Login = () => {
           <img src={Loginanimation} alt="Loginanimation" className="w-full" />
         </div>
 
-        <form className="w-full py-3 flex flex-col" onSubmit={handleOnSubmit}>
+        <form className="w-full py-3 flex flex-col" onSubmit={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
             className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
-            value={data.email}
-            onChange={handleOnChange}
+            value={formData.email}
+            onChange={handleInputChange}
           />
 
           <label htmlFor="password">Password</label>
@@ -99,8 +105,8 @@ const Login = () => {
               id="password"
               name="password"
               className=" w-full bg-slate-200 border-none outline-none "
-              value={data.password}
-              onChange={handleOnChange}
+              value={formData.password}
+              onChange={handleInputChange}
             />
             <span
               className="flex text-xl cursor-pointer"

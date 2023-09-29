@@ -1,4 +1,4 @@
-
+import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Cart from "../component/Cart";
 import empty from "../LogoPic/empty.gif"
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
 	const productCartItem = useSelector((state) => state.product.cartItem);
-	const user = useSelector(state => state.user)
+	const userToken = localStorage.getItem("token"); 
 	const navigate = useNavigate()
   
 	const totalPrice = productCartItem.reduce(
@@ -17,7 +17,20 @@ const ShoppingCart = () => {
 	  (acc, curr) => acc + parseInt(curr.qty),
 	  0
 	);
-  
+	const handlePayment = () => {
+		if (userToken) {
+		  toast("Payment successful!");
+	
+		  // You can add additional logic here if needed.
+	
+		} else {
+		  toast("You have not logged in!");
+		  setTimeout(() => {
+			navigate("/login");
+		  }, 1000);
+		}
+	  };
+	
 
 	return (
 	  <>
@@ -60,7 +73,7 @@ const ShoppingCart = () => {
 				  <span className="text-red-500">$</span> {totalPrice}
 				</p>
 			  </div>
-			  <button className="bg-red-500 w-full text-lg font-bold py-2 text-white">
+			  <button className="bg-red-500 w-full text-lg font-bold py-2 text-white" onClick={handlePayment}>
 				Payment
 			  </button>
 			</div>
