@@ -65,11 +65,11 @@ const handleSubmit = async (e) => {
         );
 console.log(response)
         const dataRes = response.data;
-
+console.log(response.data)
         // alert(dataRes.message);
         toast(dataRes.message);
 
-        if (dataRes.alert) {
+        if (dataRes.message) {
           navigate('/login');
         }
       } catch (error) {
